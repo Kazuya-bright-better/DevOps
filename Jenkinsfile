@@ -10,7 +10,7 @@ pipeline {
                 withSonarQubeEnv('sonar') {
                     sh """
                         ${scannerHome}/bin/sonar-scanner \
-                        -Dsonar.projectKey=myproject \
+                        -Dsonar.projectKey=DevOps \
                         -Dsonar.sources=.
                     """
                 }
