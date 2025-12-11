@@ -1,35 +1,37 @@
 pipeline {
-    agent any // Specifies that the pipeline can run on any available agent
+    agent any
 
     stages {
         stage('Run Sonarqube') {
             environment {
-                scannerHome = tool 'DevOps';
+                scannerHome = tool 'DevOps'  // your scanner installation name
             }
             steps {
-              withSonarQubeEnv('DevOps'){
-                sh "${scannerHome}/bin/sonar-scanner"
-              }
+                withSonarQubeEnv('sonar') {
+                    sh """
+                        ${scannerHome}/bin/sonar-scanner \
+                        -Dsonar.projectKey=myproject \
+                        -Dsonar.sources=.
+                    """
+                }
             }
         }
+
         stage('Build') {
             steps {
-                echo 'Building the project...' // Prints a message to the console
-                // Add your build commands here, e.g., sh 'make build' or sh 'dotnet build'
+                echo 'Building the project...'
             }
         }
 
         stage('Test') {
             steps {
-                echo 'Running tests...' // Prints a message to the console
-                // Add your test commands here, e.g., sh 'make check'
+                echo 'Running tests...'
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Deploying the application...' // Prints a message to the console
-                // Add your deployment commands here
+                echo 'Deploying the application...'
             }
         }
     }
