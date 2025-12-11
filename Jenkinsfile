@@ -2,6 +2,16 @@ pipeline {
     agent any // Specifies that the pipeline can run on any available agent
 
     stages {
+        stage('Run Sonarqube') {
+            environment {
+                scannerHome = tool 'lil-sonar-tool';
+            }
+            steps {
+              withSonarQubeEnv(credentialsId: 'lil-sonar-credentials', installationName: 'lil sonar installation') {
+                sh "${scannerHome}/bin/sonar-scanner"
+              }
+            }
+        }
         stage('Build') {
             steps {
                 echo 'Building the project...' // Prints a message to the console
