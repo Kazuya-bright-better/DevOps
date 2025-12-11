@@ -11,7 +11,8 @@ pipeline {
                     sh """
                         ${scannerHome}/bin/sonar-scanner \
                         -Dsonar.projectKey=DevOps \
-                        -Dsonar.sources=.
+                        -Dsonar.sources=. \
+                        -Dsonar.inclusions=**/*.sql,**/*.js,**/*.ts,**/*.java
                     """
                 }
             }
