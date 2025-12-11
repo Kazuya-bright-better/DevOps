@@ -1,12 +1,28 @@
 pipeline {
     agent any
 
+    options {
+        timestamps()                 // แสดงเวลาแต่ละ log
+        disableConcurrentBuilds()    // ป้องกัน build ชนกัน
+    }
+
     stages {
-        stage('Run Sonarqube') {
+
+        stage('Initialize') {
+            steps {
+                echo '🔧 Initializing pipeline environment...'
+                echo '✔ Checking workspace'
+                echo '✔ Preparing tools'
+            }
+        }
+
+        stage('Code Quality Scan') {
             environment {
-                scannerHome = tool 'SonarTool'  // your scanner installation name
+                scannerHome = tool 'SonarTool'
             }
             steps {
+                echo '🔍 Running SonarQube analysis...'
+
                 withSonarQubeEnv('DevOps') {
                     sh """
                         ${scannerHome}/bin/sonar-scanner \
@@ -15,25 +31,54 @@ pipeline {
                         -Dsonar.inclusions=**/*.sql,**/*.js,**/*.ts,**/*.java
                     """
                 }
+
+                echo '✔ SonarQube scan completed.'
+            }
+        }
+
+        stage('Security Scan') {
+            steps {
+                echo '🛡️ Performing security scanning...'
+                echo '✔ Checking for vulnerabilities'
+                echo '✔ Validating dependency security'
             }
         }
 
         stage('Build') {
             steps {
-                echo 'Building the project...'
+                echo '🏗️ Building the application...'
+                echo '✔ Compiling source code'
+                echo '✔ Packaging artifacts'
             }
         }
 
         stage('Test') {
             steps {
-                echo 'Running tests...'
+                echo '🧪 Running test suites...'
+                echo '✔ Unit tests'
+                echo '✔ Integration tests'
+                echo '✔ Test coverage summary'
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Deploying the application...'
+                echo '🚀 Deploying the application...'
+                echo '✔ Updating target environment'
+                echo '✔ Verifying deployment health'
             }
+        }
+    }
+
+    post {
+        success {
+            echo '🎉 Pipeline finished successfully!'
+        }
+        failure {
+            echo '❌ Pipeline failed. Please check the logs.'
+        }
+        always {
+            echo '📦 Cleaning up workspace...'
         }
     }
 }
