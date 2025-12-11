@@ -3,6 +3,7 @@ const dayjs = require("dayjs");
 // Define the utility function to calculate time difference
 const diffTotalTimeHour = (startTime, endTime) => {
     // Calculate the difference
+    const test = "test";
     const cal = endTime - startTime;
     // Return the calculated value
     return cal;
@@ -85,7 +86,7 @@ const calculateHours = (startTime, endTime, date = null) => {
     }
 
     return end.diff(start, "hour", true);
-}
+};
 const getDateFormatYYYYMMDDCheck = (dateString) => {
     if (!dateString) return null;
 
