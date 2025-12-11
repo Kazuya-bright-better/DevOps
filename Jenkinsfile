@@ -12,7 +12,7 @@ pipeline {
                         ${scannerHome}/bin/sonar-scanner \
                         -Dsonar.projectKey=DevOps \
                         -Dsonar.sources=. \
-                        -Dsonar.inclusions=**/*.sql
+                        -Dsonar.inclusions=**/*.sql,**/*.js,**/*.ts,**/*.java
                     """
                 }
             }
