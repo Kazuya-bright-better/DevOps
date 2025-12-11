@@ -4,10 +4,10 @@ pipeline {
     stages {
         stage('Run Sonarqube') {
             environment {
-                scannerHome = tool 'lil-sonar-tool';
+                scannerHome = tool 'DevOps';
             }
             steps {
-              withSonarQubeEnv(credentialsId: 'lil-sonar-credentials', installationName: 'lil sonar installation') {
+              withSonarQubeEnv(credentialsId: 'DevOps', installationName: 'DevOps') {
                 sh "${scannerHome}/bin/sonar-scanner"
               }
             }
