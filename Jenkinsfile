@@ -4,10 +4,10 @@ pipeline {
     stages {
         stage('Run Sonarqube') {
             environment {
-                scannerHome = tool 'DevOps'  // your scanner installation name
+                scannerHome = tool 'SonarTool'  // your scanner installation name
             }
             steps {
-                withSonarQubeEnv('sonar') {
+                withSonarQubeEnv('DevOps') {
                     sh """
                         ${scannerHome}/bin/sonar-scanner \
                         -Dsonar.projectKey=DevOps \
