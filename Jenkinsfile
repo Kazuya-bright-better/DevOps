@@ -15,7 +15,23 @@ pipeline {
                 echo '✔ Preparing tools'
             }
         }
-
+        stage('Input Deployment Path') {
+            script {
+                // Ask user for deployment path
+                DEPLOY_PATH = input(
+                    id: 'DeployPathInput',
+                    message: 'Enter the Deployment Path:',
+                    parameters: [
+                        string(
+                            name: 'DEPLOYMENT_PATH',
+                            defaultValue: './manifest/package.xml',
+                            description: 'Input PATH for Deployment'
+                        )
+                    ]
+                )
+                echo "Selected Deployment Path: ${DEPLOY_PATH}"
+            }
+        }
         stage('Code Quality Scan') {
             environment {
                 scannerHome = tool 'SonarTool'
